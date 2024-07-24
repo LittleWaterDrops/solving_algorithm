@@ -1,28 +1,17 @@
+import java.util.*;
+
 class Solution {
     public int[] solution(int k, int[] score) {
-        int[] answer = {};
-        int[] result = new int[score.length];
-        int[] rank = new int[k];
-        int day = 0;
-
+        int[] answer = new int[score.length];
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        
         for(int i = 0; i < score.length; i++){
-            for(int j = 0; j < k; j++){
-                if(rank[j] < score[i]){
-                    for(int l = k - 1; l > j; l--){
-                        rank[l] = rank[l - 1];
-                    }
-                    rank[j] = score[i];
-                    break;
-                }
+            pq.offer(score[i]);
+            if(i >= k){
+                pq.poll();
             }
-            if(i < k){
-                result[day++] = rank[i];
-            }
-            else{
-                result[day++] = rank[k - 1];
-            }
+            answer[i] = pq.peek();
         }
-        answer = result;
         return answer;
     }
 }
